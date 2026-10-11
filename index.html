@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aisha's Garden of Flowers 🌸</title>
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-glow: #ff4d6d;
+            --secondary-glow: #7000ff;
+            --accent-glow: #00f0ff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Clean Animated Rainbow Background */
+        body {
+            min-height: 100vh;
+            background: linear-gradient(-45deg, #0f021e, #3a0037, #002b49, #1a002c, #2d001e);
+            background-size: 500% 500%;
+            animation: colorShift 12s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 30px 15px;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        @keyframes colorShift {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 100%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 0%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Elements */
+        .floating-item {
+            position: fixed;
+            font-size: 22px;
+            pointer-events: none;
+            z-index: 1;
+            animation: floatUp 7s linear infinite;
+            bottom: -50px;
+            filter: drop-shadow(0 0 10px var(--primary-glow));
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(0.8) rotate(0deg); opacity: 0.9; }
+            100% { transform: translateY(-115vh) scale(1.4) rotate(360deg); opacity: 0; }
+        }
+
+        /* Multi-Color Glowing Lines */
+        .glow-line {
+            height: 3px;
+            width: 100%;
+            background: linear-gradient(90deg, #ff007f, #00f0ff, #7000ff, #ffb3c1, #ff007f);
+            background-size: 300% 100%;
+            margin: 25px 0;
+            border-radius: 10px;
+            animation: multiColorGlow 3s linear infinite;
+        }
+
+        @keyframes multiColorGlow {
+            0% { background-position: 0% 0%; box-shadow: 0 0 15px #ff007f; }
+            50% { background-position: 100% 0%; box-shadow: 0 0 25px #00f0ff; }
+            100% { background-position: 0% 0%; box-shadow: 0 0 15px #ff007f; }
+        }
+
+        /* Main Container - Super Clean Glassmorphism */
+        .card-container {
+            width: 100%;
+            max-width: 520px;
+            background: rgba(15, 5, 25, 0.65);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 30px;
+            padding: 35px 25px;
+            box-shadow: 0 0 35px rgba(112, 0, 255, 0.4), inset 0 0 20px rgba(255, 255, 255, 0.1);
+            z-index: 10;
+            text-align: center;
+            position: relative;
+        }
+
+        /* Multi-Color Shimmering Header */
+        .header h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 4rem;
+            background: linear-gradient(90deg, #ff4d6d, #00f0ff, #ffdd00, #7000ff, #ff4d6d);
+            background-size: 300% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: rainbowText 4s linear infinite;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.3));
+        }
+
+        @keyframes rainbowText {
+            to { background-position: 300% center; }
+        }
+
+        .header p {
+            font-size: 1rem;
+            color: #e0aaff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* Color Theme Selector Buttons */
+        .color-picker-title {
+            font-size: 0.85rem;
+            color: #ffc2d1;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .color-palette {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .color-dot {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #fff;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .color-dot:hover {
+            transform: scale(1.25);
+            box-shadow: 0 0 12px #fff;
+        }
+
+        /* Glowing Interactive Buttons Grid */
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+
+        .interactive-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #fff;
+            padding: 12px 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border-radius: 18px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .interactive-btn:hover, .interactive-btn.active {
+            background: linear-gradient(135deg, var(--primary-glow), var(--secondary-glow));
+            box-shadow: 0 0 25px var(--primary-glow);
+            transform: translateY(-3px) scale(1.02);
+            border-color: #fff;
+        }
+
+        /* Clean Sparkling Content Box */
+        .glowing-card-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 22px;
+            margin-top: 15px;
+            text-align: justify;
+            position: relative;
+            overflow: hidden;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.6s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .love-text {
+            font-size: 0.98rem;
+            line-height: 1.8;
+            color: #f1f1f1;
+            margin-bottom: 12px;
+        }
+
+        /* Multi-Color Clean Action Buttons */
+        .action-btn-large {
+            width: 100%;
+            background: linear-gradient(90deg, #ff007f, #7000ff, #00f0ff);
+            background-size: 200% auto;
+            color: #fff;
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+            transition: all 0.4s ease;
+            margin-top: 15px;
+            animation: pulseGlow 3s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { background-position: 0% center; box-shadow: 0 0 15px #ff007f; }
+            100% { background-position: 200% center; box-shadow: 0 0 30px #00f0ff; }
+        }
+
+        .music-bar {
+            margin-top: 25px;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Dynamic Floating Hearts & Color Elements -->
+    <div id="floating-container"></div>
+
+    <div class="card-container">
+        <!-- Header Section -->
+        <div class="header">
+            <h1>Aisha 🌸</h1>
+            <p>🌹 My Dearest Little Sister & My Flowers 🌹</p>
+        </div>
+
+        <div class="glow-line"></div>
+
+        <!-- Color Theme Switcher for Aisha -->
+        <div class="color-picker-title">✨ Choose Your Favorite Glow Color, Aisha:</div>
+        <div class="color-palette">
+            <div class="color-dot" style="background: linear-gradient(45deg, #ff4d6d, #ff758f);" onclick="setTheme('#ff4d6d', '#7000ff')"></div>
+            <div class="color-dot" style="background: linear-gradient(45deg, #00f0ff, #7000ff);" onclick="setTheme('#00f0ff', '#ff007f')"></div>
+            <div class="color-dot" style="background: linear-gradient(45deg, #ffdd00, #ff4d6d);" onclick="setTheme('#ffdd00', '#ff0055')"></div>
+            <div class="color-dot" style="background: linear-gradient(45deg, #00ff87, #60efff);" onclick="setTheme('#00ff87', '#0061ff')"></div>
+            <div class="color-dot" style="background: linear-gradient(45deg, #e0aaff, #c77dff);" onclick="setTheme('#e0aaff', '#7b2cbf')"></div>
+        </div>
+
+        <!-- Multi-Buttons Grid -->
+        <div class="button-grid">
+            <button class="interactive-btn active" onclick="switchTab('tab1', this)">💌 Words of Comfort</button>
+            <button class="interactive-btn" onclick="switchTab('tab2', this)">💐 My Flowers</button>
+            <button class="interactive-btn" onclick="switchTab('tab3', this)">👑 Your Value</button>
+            <button class="interactive-btn" onclick="switchTab('tab4', this)">🛡️ Brother's Promise</button>
+        </div>
+
+        <div class="glow-line"></div>
+
+        <!-- Content Area -->
+        <div class="glowing-card-box">
+            
+            <!-- Tab 1: Brotherly Comfort -->
+            <div id="tab1" class="tab-content active">
+                <h3 style="color: #00f0ff; margin-bottom: 12px; text-align: center;">Words of Comfort From Your Brother ✨</h3>
+                <p class="love-text">Aisha, my dear little sister, seeing your smile and happiness is the most important thing to me. Don't worry at all about anything that brings you sadness or anxiety.</p>
+                <p class="love-text">I am right here with you at all times, and I am not going anywhere. I will continue to be here to listen to you, comfort you, and stand by you in every situation.</p>
+                <p class="love-text">Always remember that you have a big brother who loves you, respects you, and is truly proud of you!</p>
+            </div>
+
+            <!-- Tab 2: Flowers Metaphor -->
+            <div id="tab2" class="tab-content">
+                <h3 style="color: #ff758f; margin-bottom: 12px; text-align: center;">Like Roses, Jasmine, and Gardenias 💐</h3>
+                <p class="love-text">Just as your flowers bring sweet fragrance and beauty, our conversations always bring me joy and peace of mind.</p>
+                <p class="love-text">I offer you these flowers as a symbol of sibling love, respect, and trust that will never fade away.</p>
+            </div>
+
+            <!-- Tab 3: Value / Respect -->
+            <div id="tab3" class="tab-content">
+                <h3 style="color: #ffdd00; margin-bottom: 12px; text-align: center;">Your Value To Me 👑</h3>
+                <p class="love-text">Aisha, your place in my life is truly special. Your words, your prayers, and the pure trust you show me are the foundation of genuine care.</p>
+                <p class="love-text">I am proud to have you as my little sister, and I will always protect the peace of your heart and keep a smile on your face.</p>
+            </div>
+
+            <!-- Tab 4: Protective Brotherly Promise -->
+            <div id="tab4" class="tab-content">
+                <h3 style="color: #00ff87; margin-bottom: 12px; text-align: center;">Your Brother's Promise 🤝</h3>
+                <p class="love-text">I make these promises to you from the bottom of my heart:</p>
+                <p class="love-text">1. To always be with you and protect you whenever you need me.</p>
+                <p class="love-text">2. To be your support, your brother, and your pillar of strength in any condition.</p>
+                <p class="love-text">3. To ensure that your happiness and peace of mind always come first for me.</p>
+            </div>
+
+        </div>
+
+        <div class="glow-line"></div>
+
+        <!-- Sparkle Action Buttons -->
+        <button class="action-btn-large" onclick="triggerMagicConfetti()">🎉 Color Magic & Confetti! ✨</button>
+        
+        <button class="action-btn-large" style="background: linear-gradient(90deg, #00ff87, #60efff, #0061ff);" onclick="triggerFlowerRain()">🌸 Shower Flowers & Hearts! 🌺</button>
+
+        <!-- Music Control Bar -->
+        <div class="music-bar">
+            <button class="interactive-btn" style="width: 100%; border-radius: 30px;" id="musicToggle" onclick="toggleMusic()">
+                🎵 Play Calming Soft Music
+            </button>
+            <audio id="bgMusic" loop>
+                <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112188.mp3" type="audio/mpeg">
+            </audio>
+        </div>
+
+    </div>
+
+    <script>
+        // Theme Changer
+        function setTheme(primary, secondary) {
+            document.documentElement.style.setProperty('--primary-glow', primary);
+            document.documentElement.style.setProperty('--secondary-glow', secondary);
+        }
+
+        // Tab Switcher
+        function switchTab(tabId, btnElement) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.interactive-btn').forEach(el => el.classList.remove('active'));
+
+            document.getElementById(tabId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        // Magic Multi-Color Confetti
+        function triggerMagicConfetti() {
+            confetti({
+                particleCount: 180,
+                spread: 120,
+                origin: { y: 0.6 },
+                colors: ['#ff007f', '#00f0ff', '#7000ff', '#ffdd00', '#00ff87', '#ffffff']
+            });
+        }
+
+        // Flower Rain Effect
+        function triggerFlowerRain() {
+            var duration = 3 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 6,
+                    angle: 60,
+                    spread: 60,
+                    origin: { x: 0 },
+                    colors: ['#ff007f', '#00f0ff', '#ffdd00']
+                });
+                confetti({
+                    particleCount: 6,
+                    angle: 120,
+                    spread: 60,
+                    origin: { x: 1 },
+                    colors: ['#7000ff', '#00ff87', '#ffffff']
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+
+        // Floating Hearts and Flowers Generator
+        const symbols = ['❤️', '🌹', '💖', '✨', '🌺', '💎', '🌟', '🌸'];
+        function createFloatingItem() {
+            const item = document.createElement('div');
+            item.classList.add('floating-item');
+            item.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            item.style.left = Math.random() * 100 + 'vw';
+            item.style.animationDuration = Math.random() * 4 + 4 + 's';
+            item.style.fontSize = Math.random() * 15 + 18 + 'px';
+            
+            document.getElementById('floating-container').appendChild(item);
+
+            setTimeout(() => {
+                item.remove();
+            }, 7000);
+        }
+
+        setInterval(createFloatingItem, 300);
+
+        // Music Logic
+        const audio = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicToggle');
+        let isPlaying = false;
+
+        function toggleMusic() {
+            if (isPlaying) {
+                audio.pause();
+                musicBtn.innerHTML = '🎵 Play Calming Soft Music';
+            } else {
+                audio.play();
+                musicBtn.innerHTML = '⏸️ Pause Music';
+            }
+            isPlaying = !isPlaying;
+        }
+    </script>
+</body>
+</html>
